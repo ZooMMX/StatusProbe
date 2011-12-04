@@ -85,7 +85,7 @@ public class ExtractorOmoikane implements IExtractor {
         try {
             connection = pool.getConnection();
             stmt       = connection.createStatement();
-            rs         = stmt.executeQuery("select id,descripcion,costo,existencias,precio,utilidad,codigo from omoikane.ramcachearticulos");
+            rs         = stmt.executeQuery("select id,descripcion,costo,existencias,precio,utilidad,codigo from omoikane.ramcachearticulos limit 125");
 
             List<Producto> productos = new ArrayList<Producto>();
             while(rs.next()) {

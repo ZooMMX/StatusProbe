@@ -14,7 +14,7 @@ public class Main {
 
         ExtractorOmoikane etl      = new ExtractorOmoikane();
         PubnubWS          ws       = new PubnubWS(etl);
-        ws.iniciar();
+        ws.iniciar(true);
 
     }
 }
