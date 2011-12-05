@@ -24,10 +24,10 @@ public class Config {
         return instance;
     }
 
-    public String  bdURL     ; //  = "jdbc:mysql://sfmvaldez.poweredbyclear.com:3308/Omoikane";
-    public String  bdUser    ; //  = "ZooMMX";
-    public String  bdPass    ; //  = "GatoGato00";
-    public Long    idSucursal; //  = new Long("1");
+    public String  bdURL     ;
+    public String  bdUser    ;
+    public String  bdPass    ;
+    public Long    idSucursal;
 
     public void loadConfig() throws IOException {
 

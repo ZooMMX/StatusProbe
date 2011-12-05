@@ -1,5 +1,6 @@
 package com.phesus.statusq.DAL;
 
+import com.phesus.statusq.BL.Ping;
 import com.phesus.statusq.BL.Producto;
 import com.phesus.statusq.BL.VentaDia;
 import org.junit.Test;
@@ -43,5 +44,12 @@ public class ExtractorOmoikaneTest {
             assertTrue( p.getId() > 0 );
 
         }
+    }
+
+    @Test
+    public void testPing() throws Exception {
+        ExtractorMock eo = new ExtractorMock();
+        Ping ping = eo.ping();
+        assertTrue(ping.idSucursal == 3l);
     }
 }

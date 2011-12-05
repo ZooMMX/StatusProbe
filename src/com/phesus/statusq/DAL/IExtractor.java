@@ -1,5 +1,6 @@
 package com.phesus.statusq.DAL;
 
+import com.phesus.statusq.BL.Ping;
 import com.phesus.statusq.BL.Producto;
 import com.phesus.statusq.BL.VentaDia;
 
@@ -14,4 +15,5 @@ import java.util.List;
 public interface IExtractor {
     public VentaDia getVenta();
     public List<Producto> getProductos();
+    public Ping ping();
 }

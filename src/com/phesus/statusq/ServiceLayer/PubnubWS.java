@@ -1,6 +1,7 @@
 package com.phesus.statusq.ServiceLayer;
 
 import com.phesus.statusq.BL.JSONAdapter;
+import com.phesus.statusq.BL.Ping;
 import com.phesus.statusq.BL.Producto;
 import com.phesus.statusq.BL.VentaDia;
 import com.phesus.statusq.DAL.IExtractor;
@@ -42,6 +43,10 @@ public class PubnubWS {
         return JSONAdapter.venta2JSON(vd);
     }
 
+    public JSONObject ping2JSON(Ping ping) {
+        return JSONAdapter.ping2JSON(ping);
+    }
+
     public List<JSONObject> productos2JSON(List<Producto> productos, int partitionSize) {
 
         return JSONAdapter.productos2JSON(productos, partitionSize);
@@ -53,7 +58,7 @@ public class PubnubWS {
 
     public void publishProductos() {
         List<Producto> productos        = getExtractor().getProductos();
-        List<JSONObject> lotesProductos = productos2JSON(productos, 8);
+        List<JSONObject> lotesProductos = productos2JSON(productos, 4);
 
         for(JSONObject loteJSON : lotesProductos) {
             getSocket().publish("servidor", loteJSON);
@@ -65,5 +70,11 @@ public class PubnubWS {
         VentaDia ventaDia       = getExtractor().getVenta();
         JSONObject ventaDiaJSON = venta2JSON(ventaDia);
         getSocket().publish     ( "servidor", ventaDiaJSON );
+    }
+
+    public void publishPing() {
+        Ping       ping     = getExtractor().ping();
+        JSONObject pingJSON = ping2JSON(ping);
+        getSocket().publish ( "servidor", pingJSON );
     }
 }

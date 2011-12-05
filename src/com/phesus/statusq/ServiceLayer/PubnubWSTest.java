@@ -41,6 +41,13 @@ public class PubnubWSTest {
     }
 
     @Test
+    public void testPublishPing() {
+        PubnubWS pubnubWS = new PubnubWS(extractorMock);
+        pubnubWS.iniciar(false);
+        pubnubWS.publishPing();
+    }
+
+    @Test
     public void testVenta2JSON() throws Exception {
         PubnubWS pubnubWS = new PubnubWS(extractorMock);
         VentaDia ventaDia = extractorMock.getVenta();
@@ -56,14 +63,14 @@ public class PubnubWSTest {
     public void testProductos2JSON() throws Exception {
         PubnubWS pubnubWS = new PubnubWS(null);
         List<Producto> productos = extractorMock.getProductos();
-        List<JSONObject> jsonObjects = pubnubWS.productos2JSON(productos, 8);
+        List<JSONObject> jsonObjects = pubnubWS.productos2JSON(productos, 5);
         JSONObject       jsonObject  = jsonObjects.get(0);
 
-        Assert.assertTrue   ( jsonObjects.size() == 10                        );
+        Assert.assertTrue   ( jsonObjects.size() == 20                        );
         Assert.assertTrue   ( jsonObject.get("command").equals("setProductos"));
         Assert.assertNotNull( jsonObject.get("productos")                     );
 
-        for(int i = 0; i < 10; i++) {
+        for(int i = 0; i < 5; i++) {
             final JSONObject productoJson = jsonObject.getJSONArray("productos").getJSONObject(i);
 
             final BigDecimal costo       = new BigDecimal(productoJson.getString("costo"      ));

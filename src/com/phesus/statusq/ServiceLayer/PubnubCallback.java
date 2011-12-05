@@ -29,11 +29,16 @@ class PubnubCallback implements Callback {
         // Print Received Message
         System.out.println("+"+message);
         try {
-            if(message.getString("command").equals("getVentas")) {
+            String command = message.getString("command");
+            if(command.equals("getVentas")) {
                 pubnubWS.publishVentaDia();
 
-            } else if(message.getString("command").equals("getProductos")) {
+            } else if(command.equals("getProductos")) {
                 pubnubWS.publishProductos();
+
+            } else if(command.equals("ping")) {
+                pubnubWS.publishPing();
+
             }
         } catch (Exception e) {
             Logger.getLogger("").log(Level.SEVERE, "Excepción en callback", e);

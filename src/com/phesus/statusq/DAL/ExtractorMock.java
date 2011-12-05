@@ -1,5 +1,6 @@
 package com.phesus.statusq.DAL;
 
+import com.phesus.statusq.BL.Ping;
 import com.phesus.statusq.BL.Producto;
 import com.phesus.statusq.BL.VentaDia;
 
@@ -62,4 +63,11 @@ public class ExtractorMock implements IExtractor {
         }
         return productos;
     }
+
+    public Ping ping() {
+        Ping ping = new Ping();
+        ping.idSucursal = 3l;
+        return ping;
+    }
+
 }

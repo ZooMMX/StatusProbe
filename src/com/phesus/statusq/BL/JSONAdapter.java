@@ -15,6 +15,17 @@ public class JSONAdapter {
     public JSONAdapter() {
     }
 
+    public JSONObject ping2JSON(Ping ping) {
+        JSONObject resp = new JSONObject();
+        try {
+            resp.put("idSucursal", ping.idSucursal);
+            resp.put("command"   , "ping");
+        } catch(Exception j) {
+            Logger.getLogger("").log(SEVERE, "Error conviertiendo ping a JSON", j);
+        }
+        return resp;
+    }
+
     public JSONObject venta2JSON(VentaDia vd) {
         JSONObject resp = new JSONObject();
         try {

@@ -2,10 +2,12 @@ package com.phesus.statusq.DAL;
 
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
+import com.phesus.statusq.BL.Ping;
 import com.phesus.statusq.BL.Producto;
 import com.phesus.statusq.BL.VentaDia;
 import com.phesus.statusq.Config;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
@@ -85,7 +87,7 @@ public class ExtractorOmoikane implements IExtractor {
         try {
             connection = pool.getConnection();
             stmt       = connection.createStatement();
-            rs         = stmt.executeQuery("select id,descripcion,costo,existencias,precio,utilidad,codigo from omoikane.ramcachearticulos limit 125");
+            rs         = stmt.executeQuery("select id,descripcion,costo,existencias,precio,utilidad,codigo from omoikane.ramcachearticulos");
 
             List<Producto> productos = new ArrayList<Producto>();
             while(rs.next()) {
@@ -121,5 +123,15 @@ public class ExtractorOmoikane implements IExtractor {
         }
 
         return null;
+    }
+
+    public Ping ping() {
+        Ping ping = new Ping();
+        try {
+            ping.idSucursal = Config.getInstance().idSucursal;
+        } catch (IOException e) {
+            Logger.getLogger("").log(Level.SEVERE, "Error en ping al leer configuración", e);
+        }
+        return ping;
     }
 }
