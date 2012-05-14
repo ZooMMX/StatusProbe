@@ -2,6 +2,7 @@ package com.phesus.statusq.DAL;
 
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
+import com.phesus.statusq.BL.DataSourceConfig;
 import com.phesus.statusq.BL.Ping;
 import com.phesus.statusq.BL.Producto;
 import com.phesus.statusq.BL.VentaDia;
@@ -16,7 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Proyecto Omoikane: SmartPOS 2.0
+ * Proyecto StatusQ
  * User: octavioruizcastillo
  * Date: 27/11/11
  * Time: 05:52
@@ -24,10 +25,11 @@ import java.util.logging.Logger;
 public class ExtractorOmoikane implements IExtractor {
 
     private BoneCP pool;
+    private DataSourceConfig dataSourceConfig;
 
-    public ExtractorOmoikane() {
+    public void init() {
         try {
-            Config gralConfig = Config.getInstance();
+            DataSourceConfig gralConfig = dataSourceConfig;
             final BoneCPConfig config = new BoneCPConfig();
             config.setJdbcUrl(gralConfig.bdURL); // jdbc url specific to your database, eg jdbc:mysql://127.0.0.1/yourdb
             config.setUsername(gralConfig.bdUser);
@@ -45,6 +47,10 @@ public class ExtractorOmoikane implements IExtractor {
         }
     }
 
+    public void setDataSourceConfig(DataSourceConfig ds) {
+        dataSourceConfig = ds;
+    }
+
     public VentaDia getVenta() {
 
         Connection connection = null;
@@ -58,7 +64,7 @@ public class ExtractorOmoikane implements IExtractor {
 
             rs.next();
 
-            Long idSucursal   = Config.getInstance().idSucursal;
+            Long idSucursal   = dataSourceConfig.idSucursal;
             Date fecha        = rs.getDate("hoy");
             BigDecimal total  = rs.getBigDecimal("total");
             total             = total != null ? total : new BigDecimal("0");
@@ -127,11 +133,9 @@ public class ExtractorOmoikane implements IExtractor {
 
     public Ping ping() {
         Ping ping = new Ping();
-        try {
-            ping.idSucursal = Config.getInstance().idSucursal;
-        } catch (IOException e) {
-            Logger.getLogger("").log(Level.SEVERE, "Error en ping al leer configuración", e);
-        }
+
+        ping.idSucursal = dataSourceConfig.idSucursal;
+
         return ping;
     }
 }

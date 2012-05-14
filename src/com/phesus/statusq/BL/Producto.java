@@ -3,7 +3,7 @@ package com.phesus.statusq.BL;
 import java.math.BigDecimal;
 
 /**
- * Proyecto Omoikane: SmartPOS 2.0
+ * Proyecto StatusQ
  * User: octavioruizcastillo
  * Date: 30/11/11
  * Time: 18:55

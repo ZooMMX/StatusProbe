@@ -1,8 +1,10 @@
 package com.phesus.statusq.DAL;
 
+import com.phesus.statusq.BL.DataSourceConfig;
 import com.phesus.statusq.BL.Ping;
 import com.phesus.statusq.BL.Producto;
 import com.phesus.statusq.BL.VentaDia;
+import org.apache.commons.lang.NotImplementedException;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -16,6 +18,10 @@ import java.util.List;
  * Time: 04:09 PM
  */
 public class ExtractorMock implements IExtractor {
+    public void setDataSourceConfig(DataSourceConfig ds) {
+        throw new NotImplementedException("Método no implementado... nada más");
+    }
+
     /**
      * <pre>Genera información de ventas de prueba
      * Específicamente genera la siguiente:
@@ -68,6 +74,10 @@ public class ExtractorMock implements IExtractor {
         Ping ping = new Ping();
         ping.idSucursal = 3l;
         return ping;
+    }
+
+    public void init() {
+
     }
 
 }

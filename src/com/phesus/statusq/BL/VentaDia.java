@@ -8,7 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Proyecto Omoikane: SmartPOS 2.0
+ * Proyecto StatusQ
  * User: octavioruizcastillo
  * Date: 27/11/11
  * Time: 05:40

@@ -56,7 +56,7 @@ public class JSONAdapter {
             JSONObject json = new JSONObject();
             try {
                 json.put("command", "setProductos");
-                json.put("idSucursal", Config.getInstance().idSucursal);
+                json.put("idSucursal", Config.getInstance().dataSourceConfig.idSucursal);
                 JSONArray productosJSON = new JSONArray();
                 for (Producto producto : loteProductos) {
                     final JSONObject productoJSON = new JSONObject();

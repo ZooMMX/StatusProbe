@@ -14,7 +14,7 @@ import static junit.framework.Assert.assertTrue;
 
 
 /**
- * Proyecto Omoikane: SmartPOS 2.0
+ * Proyecto StatusQ
  * User: octavioruizcastillo
  * Date: 01/12/11
  * Time: 12:56

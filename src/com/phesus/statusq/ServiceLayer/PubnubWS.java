@@ -1,6 +1,5 @@
 package com.phesus.statusq.ServiceLayer;
 
-import com.phesus.statusq.BL.JSONAdapter;
 import com.phesus.statusq.BL.Ping;
 import com.phesus.statusq.BL.Producto;
 import com.phesus.statusq.BL.VentaDia;
@@ -14,23 +13,28 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Proyecto Omoikane: SmartPOS 2.0
+ * Proyecto StatusQ
  * User: octavioruizcastillo
  * Date: 27/11/11
  * Time: 06:09
  */
-public class PubnubWS {
+public class PubnubWS extends GenericWS {
 
     private Pubnub pubnub;
-    private IExtractor extractor;
-    private final JSONAdapter JSONAdapter = new JSONAdapter();
+
+    private Boolean bidireccional;
 
     public PubnubWS(IExtractor extractor) {
-        this.extractor = extractor;
+        super(extractor);
     }
-    public void iniciar(Boolean bidireccional) {
+
+    @Override
+    public void iniciar() {
         pubnub  = new Pubnub( "pub-24eb74f7-b8f9-485a-86bb-a08f05c7cb89", "sub-b3f1fd2e-1897-11e1-8b36-c5b5280f91f0" );
         if(bidireccional) setCallback(new PubnubCallback(this));
+    }
+    public void setBidireccional(Boolean bidireccional) {
+        this.bidireccional = bidireccional;
     }
     public Pubnub getSocket() {
         return pubnub;
@@ -39,23 +43,7 @@ public class PubnubWS {
         pubnub.subscribe( "clientes", callback );
     }
 
-    public JSONObject venta2JSON(VentaDia vd) {
-        return JSONAdapter.venta2JSON(vd);
-    }
-
-    public JSONObject ping2JSON(Ping ping) {
-        return JSONAdapter.ping2JSON(ping);
-    }
-
-    public List<JSONObject> productos2JSON(List<Producto> productos, int partitionSize) {
-
-        return JSONAdapter.productos2JSON(productos, partitionSize);
-    }
-
-    public IExtractor getExtractor() {
-        return extractor;
-    }
-
+    @Override
     public void publishProductos() {
         List<Producto> productos        = getExtractor().getProductos();
         List<JSONObject> lotesProductos = productos2JSON(productos, 4);
@@ -66,12 +54,14 @@ public class PubnubWS {
         }
     }
 
+    @Override
     public void publishVentaDia() {
         VentaDia ventaDia       = getExtractor().getVenta();
         JSONObject ventaDiaJSON = venta2JSON(ventaDia);
         getSocket().publish     ( "servidor", ventaDiaJSON );
     }
 
+    @Override
     public void publishPing() {
         Ping       ping     = getExtractor().ping();
         JSONObject pingJSON = ping2JSON(ping);
