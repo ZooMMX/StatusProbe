@@ -4,6 +4,7 @@ out/production/StatusProbe/com/phesus/statusq/ServiceLayer/PubnubWSTest.class
 StatusProbe.iws
 
 .DS_Store
+.idea/**
 
 out/production/StatusProbe/com/phesus/statusq/ServiceLayer/PubnubWS.class
 
