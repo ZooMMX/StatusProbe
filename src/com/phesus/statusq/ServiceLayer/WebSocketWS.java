@@ -82,7 +82,9 @@ public class WebSocketWS extends GenericWS {
     public class WSClient extends WebSocketClient {
 
         public WSClient() throws IOException, URISyntaxException {
-            super(new URI("ws://localhost:9000/hola?sucursalId="+Config.getInstance().dataSourceConfig.idSucursal));
+            //super(new URI("ws://localhost:9000/hola?sucursalId="+Config.getInstance().dataSourceConfig.idSucursal));
+            super(new URI(Config.getInstance().wsURL+"/hola?sucursalId="+Config.getInstance().dataSourceConfig.idSucursal));
+            //super(new URI("ws://damp-anchorage-4847.herokuapp.com/hello?sucursalId="+Config.getInstance().dataSourceConfig.idSucursal));
         }
 
         @Override

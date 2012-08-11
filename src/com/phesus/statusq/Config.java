@@ -27,6 +27,7 @@ public class Config {
 
     public DataSourceConfig dataSourceConfig = new DataSourceConfig();
     public String activeExtractor;
+    public String wsURL;
 
     public void loadConfig() throws IOException {
 
@@ -43,6 +44,7 @@ public class Config {
          ds.bdPass       = props.getProperty("datasource.pass");
          ds.idSucursal   = new Long(props.getProperty("datasource.idSucursal"));
          activeExtractor = props.getProperty("activeExtractor");
+         wsURL           = props.getProperty("ws.URL");
 
     }
 }
