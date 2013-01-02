@@ -22,11 +22,21 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
         IExtractor        et       = MultiExtractor.getActiveExtractor();
-        WebSocketWS ws       = new WebSocketWS(et);
-        //ws.setBidireccional(true);
+        WebSocketWS       ws       = new WebSocketWS(et);
         ws.iniciar();
+
         while(true) {
-            Thread.sleep(100000);
+            try {
+                Thread.sleep(10000);
+                if( ws.getWsClient().getReadyState() != 1 ) {
+                    et = MultiExtractor.getActiveExtractor();
+                    ws = new WebSocketWS(et);
+                    ws.iniciar();
+                }
+                System.out.println("Estado: " + ws.getWsClient().getReadyState());
+            } catch(Exception e) {
+                Logger.getLogger(Main.class).error("Error en main loop", e);
+            }
         }
     }
 }

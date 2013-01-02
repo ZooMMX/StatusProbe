@@ -34,12 +34,13 @@ public class ExtractorOmoikane implements IExtractor {
             config.setJdbcUrl(gralConfig.bdURL); // jdbc url specific to your database, eg jdbc:mysql://127.0.0.1/yourdb
             config.setUsername(gralConfig.bdUser);
             config.setPassword(gralConfig.bdPass);
-            config.setMinConnectionsPerPartition(2);
-            config.setMaxConnectionsPerPartition(4);
+            config.setMinConnectionsPerPartition(1);
+            config.setMaxConnectionsPerPartition(3);
             config.setPartitionCount(1);
             config.setDisableJMX(true);
             config.setTransactionRecoveryEnabled(true);
-            config.setAcquireRetryAttempts(2);
+            config.setAcquireRetryAttempts(100000);
+            config.setAcquireRetryDelayInMs(5000);
             config.setLogStatementsEnabled(true);
             pool = new BoneCP(config);
         } catch (Exception e) {
