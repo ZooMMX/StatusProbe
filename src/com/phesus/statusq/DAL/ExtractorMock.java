@@ -80,4 +80,9 @@ public class ExtractorMock implements IExtractor {
 
     }
 
+    @Override
+    public void shutdown() {
+
+    }
+
 }

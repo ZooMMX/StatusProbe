@@ -7,14 +7,14 @@ import com.phesus.statusq.BL.Ping;
 import com.phesus.statusq.BL.Producto;
 import com.phesus.statusq.BL.VentaDia;
 import com.phesus.statusq.Config;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 /**
  * Proyecto StatusQ
@@ -44,8 +44,12 @@ public class ExtractorOmoikane implements IExtractor {
             config.setLogStatementsEnabled(true);
             pool = new BoneCP(config);
         } catch (Exception e) {
-            Logger.getLogger("").log(Level.SEVERE, "Error iniciando extractor omoikane", e);
+            Logger.getLogger(ExtractorOmoikane.class).error("Error iniciando extractor omoikane", e);
         }
+    }
+
+    public void shutdown() {
+        pool.shutdown();
     }
 
     public void setDataSourceConfig(DataSourceConfig ds) {
@@ -72,14 +76,14 @@ public class ExtractorOmoikane implements IExtractor {
 
             return new VentaDia(idSucursal, fecha, total);
         } catch (Exception e) {
-            Logger.getLogger("").log(Level.SEVERE, "Error extrayendo ventas de omoikane", e);
+            Logger.getLogger(ExtractorOmoikane.class).error("Error extrayendo ventas de omoikane", e);
         } finally {
             try {
                 if(rs         != null) rs.close();
                 if(stmt       != null) stmt.close();
                 if(connection != null) connection.close();
             } catch (SQLException e) {
-                Logger.getLogger("").log(Level.SEVERE, "Error al cerrar conexiones", e);
+                Logger.getLogger(ExtractorOmoikane.class).error("Error al cerrar conexiones", e);
             }
         }
 
@@ -118,14 +122,14 @@ public class ExtractorOmoikane implements IExtractor {
 
             return productos;
         } catch (Exception e) {
-            Logger.getLogger("").log(Level.SEVERE, "Error extrayendo productos de omoikane", e);
+            Logger.getLogger(ExtractorOmoikane.class).error("Error extrayendo productos de omoikane", e);
         } finally {
             try {
                 if(rs         != null) rs.close();
                 if(stmt       != null) stmt.close();
                 if(connection != null) connection.close();
             } catch (SQLException e) {
-                Logger.getLogger("").log(Level.SEVERE, "Error al cerrar conexiones", e);
+                Logger.getLogger(ExtractorOmoikane.class).error("Error al cerrar conexiones", e);
             }
         }
 

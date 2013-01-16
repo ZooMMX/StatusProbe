@@ -19,4 +19,6 @@ public interface IExtractor {
     public List<Producto> getProductos();
     public Ping ping();
     public void init();
+
+    public void shutdown();
 }

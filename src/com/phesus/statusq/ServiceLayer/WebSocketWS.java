@@ -4,7 +4,9 @@ import com.phesus.statusq.BL.Ping;
 import com.phesus.statusq.BL.Producto;
 import com.phesus.statusq.BL.VentaDia;
 import com.phesus.statusq.Config;
+import com.phesus.statusq.DAL.ExtractorOmoikane;
 import com.phesus.statusq.DAL.IExtractor;
+import org.apache.log4j.Logger;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 import org.json.JSONException;
@@ -14,8 +16,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Proyecto Omoikane: SmartPOS 2.0
@@ -44,9 +44,9 @@ public class WebSocketWS extends GenericWS {
             wsClient = new WSClient();
             wsClient.connect();
         } catch (IOException e) {
-            Logger.getLogger("").throwing("WebSocketWS", "iniciar", e);
+            Logger.getLogger(WebSocketWS.class).error("iniciar", e);
         } catch (URISyntaxException e) {
-            Logger.getLogger("").throwing("WebSocketWS", "iniciar", e);
+            Logger.getLogger(WebSocketWS.class).error("iniciar", e);
         }
 
     }
@@ -58,7 +58,7 @@ public class WebSocketWS extends GenericWS {
 
         for(JSONObject loteJSON : lotesProductos) {
             wsClient.send( loteJSON.toString() );
-            Logger.getAnonymousLogger().log(Level.INFO, "Productos publicados");
+            Logger.getLogger(WebSocketWS.class).info("Productos publicados");
         }
     }
 
@@ -66,7 +66,7 @@ public class WebSocketWS extends GenericWS {
     public void publishVentaDia() {
         VentaDia ventaDia       = getExtractor().getVenta();
         JSONObject ventaDiaJSON = venta2JSON(ventaDia);
-        Logger.getAnonymousLogger().log(Level.INFO, "Ventas publicadas: "+ventaDiaJSON.toString());
+        Logger.getLogger(WebSocketWS.class).info("Ventas publicadas: "+ventaDiaJSON.toString());
         wsClient.send(ventaDiaJSON.toString());
     }
 
@@ -125,7 +125,7 @@ public class WebSocketWS extends GenericWS {
                     ping = false;
                 }
             } catch (JSONException e) {
-                Logger.getAnonymousLogger().log(Level.SEVERE, "Error convirtiendo JSON entrante");
+                Logger.getLogger(WebSocketWS.class).error("Error convirtiendo JSON entrante");
             }
         }
 
