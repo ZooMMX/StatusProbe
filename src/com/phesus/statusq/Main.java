@@ -35,7 +35,7 @@ public class Main {
 
         while(true) {
             try {
-                Thread.sleep(30000);
+                Thread.sleep(60000);
                 if( ws.getWsClient().getReadyState() != 1 ) {
                     et.shutdown();
                     et = MultiExtractor.getActiveExtractor();

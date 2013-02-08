@@ -54,7 +54,7 @@ public class WebSocketWS extends GenericWS {
     @Override
     public void publishProductos() {
         List<Producto> productos        = getExtractor().getProductos();
-        List<JSONObject> lotesProductos = productos2JSON(productos, 400);
+        List<JSONObject> lotesProductos = productos2JSON(productos, 25000);
 
         for(JSONObject loteJSON : lotesProductos) {
             wsClient.send( loteJSON.toString() );
@@ -120,6 +120,11 @@ public class WebSocketWS extends GenericWS {
 
                 if(command.equals("getVentas")) {
                     publishVentaDia();
+                }
+                if(command.equals("getProductos")) {
+                    new Thread() {
+                        public void run() { publishProductos(); }
+                    }.start();
                 }
                 if(command.equals("pong")) {
                     ping = false;

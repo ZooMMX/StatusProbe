@@ -49,3 +49,5 @@ lib/slf4j-api-1.6.1.jar
 lib/slf4j-jdk14-1.6.1.jar
 
 lib/slf4j-simple-1.6.1.jar
+
+*.class
